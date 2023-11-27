@@ -135,7 +135,8 @@ class HBNBCommand(cmd.Cmd):
                 value = value.replace('_', ' ')
             if '.' in value:
                 value = float(value)
-
+            if not '.' in value and value.isdigit():
+                value = int(value)
 
             setattr(new_instance, key, value)
 
