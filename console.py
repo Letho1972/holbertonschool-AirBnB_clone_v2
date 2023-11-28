@@ -128,17 +128,16 @@ class HBNBCommand(cmd.Cmd):
         new_instance = HBNBCommand.classes[list_args[0]]()
 
         for param in list_args[1:]:
-            split = param.find('=')
-            key, value = param[:split], param[split + 1:]
+            key, value = param.split('=')
             if '"' in value:
-                value = value.replace('"', '')
-            elif '_' in value:
+                value = value.strip('"')
+            if '_' in value:
                 value = value.replace('_', ' ')
-            if '.' in value:
+            if isinstance(value, float):
                 value = float(value)
-
+            if isinstance(value, int):
+                value = int(value)
             setattr(new_instance, key, value)
-
         storage.save()
         print(new_instance.id)
         storage.save()
