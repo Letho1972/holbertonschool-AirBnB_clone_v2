@@ -131,8 +131,8 @@ class HBNBCommand(cmd.Cmd):
             split = param.find('=')
             key, value = param[:split], param[split + 1:]
             if '"' in value:
-                value = value.strip('"')
-            if '_' in value:
+                value = value.replace('"', ' ')
+            elif '_' in value:
                 value = value.replace('_', ' ')
             if '.' in value:
                 value = float(value)
