@@ -113,34 +113,58 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, args):
+    def do_create(self, string):
         """ Create an object of any class"""
-        if not args:
+        arguments = string.split(' ')[1:]
+        classe = string.split(' ')[0]
+        args = {}
+        cache_key = ""
+        for arg in arguments:
+            if cache_key == "":
+                key = arg.split('=')[0]
+                args[key] = ""
+                value = arg.split('=')[1]
+                if value[0] == '"':
+                    value = value[1:]
+                    cache_key = key
+                else:
+                    if value.find('.') >= 0:
+                        value = float(value)
+                        args[key] = value
+                    else:
+                        value = int(value)
+                        args[key] = value
+                if type(value) is str and value[-1:] == '"':
+                    value = value[:-1]
+                    cache_key = ""
+                    args[key] += value
+            else:
+                key = cache_key
+                value = arg
+                if arg[-1:] == '"':
+                    value = value[:-1]
+                    cache_key = ""
+                args[key] += " {}".format(value)
+
+        if not classe:
             print("** class name missing **")
             return
-
-        list_args = args.split()
-
-        if list_args[0] not in HBNBCommand.classes:
+        elif classe not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
 
-        new_instance = HBNBCommand.classes[list_args[0]]()
+        new_instance = HBNBCommand.classes[classe]()
+        for _, element in enumerate(args):
+            key = element
+            value = args[element]
 
-        for param in list_args[1:]:
-            key, value = param.split('=')
-            if '"' in value:
-                value = value.strip('"')
-            if '_' in value:
-                value = value.replace('_', ' ')
-            if isinstance(value, float):
-                value = float(value)
-            if isinstance(value, int):
-                value = int(value)
+            # IS A STRING VALUE
+            if type(value) is str:
+                value = value.replace("_", " ")
             setattr(new_instance, key, value)
+        storage.new(new_instance)
         storage.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -203,7 +227,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(storage.all()[key])
+            del storage.all()[key]
             storage.save()
         except KeyError:
             print("** no instance found **")
@@ -222,11 +246,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage.all().items():
+            for k, v in storage.all(HBNBCommand.classes[args]).items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage.all().items():
+            for k, v in storage.all():
                 print_list.append(str(v))
 
         print(print_list)
@@ -335,6 +359,29 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
+    def parse(self, line):
+        """
+        Parse the input line into command and arguments
+        """
+        parts = line.split()
+        args = []
+        i = 0
+        while i < len(parts):
+            if parts[i].startswith('"'):
+                j = i + 1
+                while j < len(parts) and not parts[j].endswith('"'):
+                    j += 1
+                if j < len(parts):
+                    args.append(' '.join(parts[i:j+1])[1:-1])
+                    i = j + 1
+                else:
+                    args.append(parts[i])
+                    i += 1
+            else:
+                args.append(parts[i])
+                i += 1
+        return args
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
