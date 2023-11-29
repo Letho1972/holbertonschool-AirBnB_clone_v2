@@ -42,13 +42,12 @@ class DBStorage:
 
         if cls is None:
             for cls in _class:
-                for key in self.__session.query(cls):
-                    storage["{}.{}".format(cls.__name__, instance.id)] = key
+                for instance in self.__session.query(cls):
+                    query_objects["{}.{}".format(cls.__name__, instance.id)] = instance
         else:
             for cls in _class:
-                for key in self.__session.query(cls):
-                    storage["{}.{}".format(cls.__name__, instance.id)] = key
-
+                for instance in self.__session.query(cls):
+                    query_objects["{}.{}".format(cls.__name__, instance.id)] = instance
         result = {obj.__class__.__name__ + "." + obj.id: obj for obj in query_objects}
 
         return result
@@ -71,6 +70,6 @@ class DBStorage:
 
         Base.metadata.create_all(self.__engine)
 
-        session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
 
         self.__session = scoped_session(Session)
