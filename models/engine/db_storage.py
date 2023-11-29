@@ -32,8 +32,8 @@ class DBStorage:
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
-        Base.metadata.create_all(self.__engine)
         session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        self.__session = scoped_session(Session)
 
     def all(self, cls=None):
         """ Query on the current database session """
@@ -66,5 +66,8 @@ class DBStorage:
     def reload(self):
         """ lunch a new instance """
 
-        Session = scoped_session(session)
-        self.__session = Session()
+        Base.metadata.create_all(self.__engine)
+
+        session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+
+        self.__session = scoped_session(Session)
