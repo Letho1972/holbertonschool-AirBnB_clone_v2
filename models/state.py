@@ -3,6 +3,7 @@
 from models.base_model import BaseModel
 from sqlalchemy.orm import relationship
 from models.city import City
+from sqlalchemy import Column, Integer, String, DateTime, func
 
 
 class State(BaseModel):

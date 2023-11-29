@@ -2,7 +2,7 @@
 """This module defines a base class for all models in our hbnb clone"""
 import uuid
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, func
 from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
@@ -10,9 +10,9 @@ Base = declarative_base()
 
 class BaseModel:
     """A base class for all hbnb models"""
-        id = Column(String(60), nullable=False, primary_key=True)
-        created_at = Column(DateTime, nullable=False, default=DateTime.utcnow())
-        updated_at = Column(DateTime, nullable=False, default=DateTime.utcnow())
+    id = Column(String(60), nullable=False, primary_key=True)
+    created_at = Column(DateTime, nullable=False, default=func.utcnow())
+    updated_at = Column(DateTime, nullable=False, default=func.utcnow())
 
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
@@ -51,8 +51,8 @@ class BaseModel:
         dictionary = {}
         dictionary.update(self.__dict__)
 
-        if '_sa_instance_state' is in dictionary:
-            del dictionary('_sa_instance_state')
+        if '_sa_instance_state' in dictionary:
+            del dictionary['_sa_instance_state']
 
         dictionary.update({'__class__':
                           (str(type(self)).split('.')[-1]).split('\'')[0]})

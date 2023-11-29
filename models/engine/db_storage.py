@@ -16,7 +16,7 @@ from models.state import State
 from models.user import User
 
 
-class DBstorage:
+class DBStorage:
     """ DBStorage class """
     __engine = None
     __session = None
@@ -54,7 +54,7 @@ class DBstorage:
         """ Add a new object """
         self.__session.add(obj)
 
-    def save(self)
+    def save(self):
         """ save the instance """
         self.__session.commit()
 
