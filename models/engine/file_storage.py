@@ -11,7 +11,11 @@ class FileStorage:
     def all(self, cls=None):
         """Returns a dictionary or a filtered dictionary of models currently in storage"""
         if cls is not None:
-            filtered_dict = {key: val for key, val in FileStorage.__objects.items() if isinstance(val, cls)}
+            filtered_dict = {}
+
+            for key, objects in FileStorage.__objects.items():
+                if type(objects) is cls:
+                    filtered_dict[key] = obj
             return filtered_dict
         else:
             return FileStorage.__objects
@@ -59,4 +63,3 @@ class FileStorage:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in FileStorage.__objects:
                 del FileStorage.__objects[key]
-    

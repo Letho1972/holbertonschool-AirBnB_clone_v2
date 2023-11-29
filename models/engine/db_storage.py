@@ -29,8 +29,11 @@ class DBStorage:
                                    getenv('HBNB_MYSQL_HOST'),
                                    getenv('HBNB_MYSQL_DB')
                             ), pool_pre_ping=True)
-        if getenv('HBNB_ENV') == 'test':
-            Base.metadata.drop_all(self.__engine)
+        try:
+            if getenv('HBNB_ENV') == 'test':
+                Base.metadata.drop_all(self.__engine)
+        except KeyError:
+            pass
 
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         self.__session = scoped_session(Session)
@@ -48,9 +51,8 @@ class DBStorage:
             for cls in _class:
                 for instance in self.__session.query(cls):
                     query_objects["{}.{}".format(cls.__name__, instance.id)] = instance
-        result = {obj.__class__.__name__ + "." + obj.id: obj for obj in query_objects}
 
-        return result
+        return query_objects
 
     def new(self, obj):
         """ Add a new object """
