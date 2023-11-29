@@ -38,13 +38,16 @@ class DBStorage:
     def all(self, cls=None):
         """ Query on the current database session """
         query_objects = {}
+        _class = [User, State, City, Amenity, Place, Review]
 
-
-        if cls:
-            query_objects = self.__session.query(cls).all()
+        if cls is None:
+            for cls in _class:
+                for key in self.__session.query(cls):
+                    storage["{}.{}".format(cls.__name__, instance.id)] = key
         else:
-            for class_ in Base.__subclasses__():
-                query_objects.extend(self.__session.query(class_).all())
+            for cls in _class:
+                for key in self.__session.query(cls):
+                    storage["{}.{}".format(cls.__name__, instance.id)] = key
 
         result = {obj.__class__.__name__ + "." + obj.id: obj for obj in query_objects}
 
