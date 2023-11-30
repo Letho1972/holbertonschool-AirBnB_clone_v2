@@ -9,7 +9,7 @@ from models.base_model import BaseModel
 from models import storage
 
 
-class TestDBStorage(unittest.TestCase):
+class Test_DBStorage():
 
     def setUp(self):
         """Set up a clean DBStorage instance before each test."""
