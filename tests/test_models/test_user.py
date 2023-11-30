@@ -41,10 +41,10 @@ class TestUser(Test_BaseModel):
     def test_places_relationship(self):
         """Test the relationship between User and Place."""
         user = User(email="test@example.com", password="password")
-        self.save_instance(user)
+        self.value.save(user)
 
         place = Place(name="Test Place", user_id=user.id)
-        self.save_instance(place)
+        self.value.save(place)
 
         self.assertIn(place, user.places)
         self.assertEqual(user, place.user)
@@ -52,10 +52,10 @@ class TestUser(Test_BaseModel):
     def test_reviews_relationship(self):
         """Test the relationship between User and Review."""
         user = User(email="test@example.com", password="password")
-        self.save_instance(user)
+        self.value.save(user)
 
         review = Review(text="Great place!", user_id=user.id)
-        self.save_instance(review)
+        self.value.save(review)
 
         self.assertIn(review, user.reviews)
         self.assertEqual(user, review.user)
