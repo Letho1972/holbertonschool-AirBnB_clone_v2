@@ -2,7 +2,12 @@
 """ City Module for HBNB project """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey
+from models.place import Place
 from sqlalchemy.orm import relationship
+from os import getenv
+
+if getenv("HBNB_TYPE_STORAGE") == "db":
+     places = relationship("Place", backref="cities", cascade="all, delete")
 
 
 class City(BaseModel, Base):
