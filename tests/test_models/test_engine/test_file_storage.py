@@ -92,7 +92,7 @@ class test_fileStorage(unittest.TestCase):
 
     def test_type_objects(self):
         """ Confirm __objects is a dict """
-        self.assertEqual(type(storage.all()), dict)
+        self.assertEqual(type(storage._FileStorage__objects), dict)
 
     def test_key_format(self):
         """ Key is properly formatted """
