@@ -53,7 +53,7 @@ This repository contains the initial stage of a student project to build a clone
 Users are able to issue a number of console command using an alternative syntax:
 
 	Usage: <class_name>.<command>([<id>[name_arg value_arg]|[kwargs]])
-Advanced syntax is implemented for the following commands: 
+Advanced syntax is implemented for the following commands:
 
     * all - Shows all objects the program has access to, or all objects of a given class
 
@@ -65,8 +65,27 @@ Advanced syntax is implemented for the following commands:
 
     * update - Updates existing attributes an object based on class name and UUID
 
+##### implemented dbstorage with keeping the filestorage communication
+Add DB and SQL relationship
+
+    We have use mysql 8.0 and SQLAlchemy 1.4
+
+    Usage:
+    <command><classe> <id><arguments>
+
+    For Example:
+    create Place city_id="0001" user_id="0001" name="My_little_house" number_rooms=4 number_bathrooms=2 max_guest=10 price_by_night=300
+    latitude=37.773972 longitude=-122.431297
+    all Place
+
+    For this example result:
+    (hbnb) 53dc4cab-f29c-4152-9a43-dc6d761ed38f
+
+    (hbnb) ["[Place] (53dc4cab-f29c-4152-9a43-dc6d761ed38f) {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x7fb2e2e74940>, 'id': '53dc4cab-f29c-4152-9a43-dc6d761ed38f', 'created_at': datetime.datetime(2023, 11, 30, 14, 30, 46, 834378), 'updated_at': datetime.datetime(2023, 11, 30, 14, 30, 46, 834385), 'city_id': '0001', 'user_id': '0001', 'name': 'My little house', 'number_rooms': 4, 'number_bathrooms': 2, 'max_guest': 10, 'price_by_night': 300, 'latitude': 37.773972, 'longitude': -122.431297}"]
+
 <br>
 <br>
+
 <center> <h2>Examples</h2> </center>
 <h3>Primary Command Syntax</h3>
 
@@ -78,16 +97,16 @@ Usage: create <class_name>
 ```
 (hbnb) create BaseModel
 3aa5babc-efb6-4041-bfe9-3cc9727588f8
-(hbnb)                   
+(hbnb)
 ```
 ###### Example 1: Show an object
 Usage: show <class_name> <_id>
 
 ```
 (hbnb) show BaseModel 3aa5babc-efb6-4041-bfe9-3cc9727588f8
-[BaseModel] (3aa5babc-efb6-4041-bfe9-3cc9727588f8) {'id': '3aa5babc-efb6-4041-bfe9-3cc9727588f8', 'created_at': datetime.datetime(2020, 2, 18, 14, 21, 12, 96959), 
+[BaseModel] (3aa5babc-efb6-4041-bfe9-3cc9727588f8) {'id': '3aa5babc-efb6-4041-bfe9-3cc9727588f8', 'created_at': datetime.datetime(2020, 2, 18, 14, 21, 12, 96959),
 'updated_at': datetime.datetime(2020, 2, 18, 14, 21, 12, 96971)}
-(hbnb)  
+(hbnb)
 ```
 ###### Example 2: Destroy an object
 Usage: destroy <class_name> <_id>
@@ -95,14 +114,14 @@ Usage: destroy <class_name> <_id>
 (hbnb) destroy BaseModel 3aa5babc-efb6-4041-bfe9-3cc9727588f8
 (hbnb) show BaseModel 3aa5babc-efb6-4041-bfe9-3cc9727588f8
 ** no instance found **
-(hbnb)   
+(hbnb)
 ```
 ###### Example 3: Update an object
 Usage: update <class_name> <_id>
 ```
 (hbnb) update BaseModel b405fc64-9724-498f-b405-e4071c3d857f first_name "person"
 (hbnb) show BaseModel b405fc64-9724-498f-b405-e4071c3d857f
-[BaseModel] (b405fc64-9724-498f-b405-e4071c3d857f) {'id': 'b405fc64-9724-498f-b405-e4071c3d857f', 'created_at': datetime.datetime(2020, 2, 18, 14, 33, 45, 729889), 
+[BaseModel] (b405fc64-9724-498f-b405-e4071c3d857f) {'id': 'b405fc64-9724-498f-b405-e4071c3d857f', 'created_at': datetime.datetime(2020, 2, 18, 14, 33, 45, 729889),
 'updated_at': datetime.datetime(2020, 2, 18, 14, 33, 45, 729907), 'first_name': 'person'}
 (hbnb)
 ```
