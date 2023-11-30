@@ -13,11 +13,14 @@ class State(BaseModel, Base):
     name = Column(String(128), nullable=False)
 
     if getenv("HBNB_TYPE_STORAGE") == "db":
-        cities_relation = relationship("City", backref="state", cascade="all, delete")
+        cities_relation = relationship(
+            "City", backref="state", cascade="all, delete"
+            )
     else:
         @property
         def cities(self):
-            """ Getter attribute, return the lisst of citu instance in state.id """
+            """ Getter attribute, return the list
+            of city instance in state.id """
             from models import storage
             city_list = []
             for city in storage.all("City").values():
