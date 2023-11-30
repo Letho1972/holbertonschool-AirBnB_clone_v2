@@ -15,7 +15,7 @@ class FileStorage:
 
             for key, objects in FileStorage.__objects.items():
                 if type(objects) is cls:
-                    filtered_dict[key] = obj
+                    filtered_dict[key] = objects
             return filtered_dict
         else:
             return FileStorage.__objects
