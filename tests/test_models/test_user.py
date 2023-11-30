@@ -1,11 +1,11 @@
 import unittest
-from tests.test_models.test_base_model import TestBaseModel
+from tests.test_models.test_base_model import Test_BaseModel
 from models.user import User
 from models.place import Place
 from models.review import Review
 
 
-class TestUser(TestBaseModel):
+class TestUser(Test_BaseModel):
     """Test the User class"""
 
     def setUp(self):
