@@ -77,6 +77,7 @@ class Test_BaseModel(unittest.TestCase):
         """Test creating an instance with invalid kwargs (one key)"""
         invalid_kwargs = {'Name': 'test'}
         new_instance = BaseModel(**invalid_kwargs)
+        self.assertIn('Name', new_instance.to_dict())
         self.assertEqual(new_instance.name, 'test')
 
     def test_id(self):
