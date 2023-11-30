@@ -1,10 +1,10 @@
 import unittest
-from tests.test_models.test_base_model import TestBaseModel
+from tests.test_models.test_base_model import Test_BaseModel
 from models.city import City
 from models.state import State
 
 
-class TestCity(TestBaseModel):
+class TestCity(Test_BaseModel):
     """Test the City class"""
 
     def setUp(self):

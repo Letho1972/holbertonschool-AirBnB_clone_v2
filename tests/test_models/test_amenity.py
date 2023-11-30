@@ -1,9 +1,9 @@
 import unittest
-from tests.test_models.test_base_model import TestBaseModel
+from tests.test_models.test_base_model import Test_BaseModel
 from models.amenity import Amenity
 
 
-class Test_Amenity():
+class Test_Amenity(Test_BaseModel):
     """Test the Amenity class"""
 
     def setUp(self):

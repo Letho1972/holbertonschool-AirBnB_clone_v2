@@ -6,7 +6,7 @@ import json
 import os
 
 
-class TestBaseModel(unittest.TestCase):
+class Test_BaseModel(unittest.TestCase):
     """Test the BaseModel class"""
 
     def setUp(self):
