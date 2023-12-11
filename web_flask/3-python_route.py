@@ -27,7 +27,7 @@ def Variable(text):
 @app.route("/python/<text>", strict_slashes=False)
 def Python(text="is cool"):
     text = text.replace('_', ' ')
-    return f"python {text}"
+    return f"Python {text}"
 
 
 if __name__ == '__main__':
