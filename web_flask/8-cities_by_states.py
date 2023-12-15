@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 """Web App with Flask"""
+
 from flask import Flask, render_template
 from models import storage
+from models.state import State
+from models.city import City
 
 app = Flask(__name__)
 
@@ -15,10 +18,8 @@ def teardown(exception):
 @app.route('/cities_by_states', strict_slashes=False)
 def cities_by_states():
     """Display a HTML page with a list of all State objects in DBStorage."""
-    from models.state import State
-    from models.city import City
-    states = storage.all(State).values()
-    cities = storage.all(City).values()
+    states = storage.all(State)
+    cities = storage.all(City)
 
     return render_template("8-cities_by_states.html",
                            cities=cities,
